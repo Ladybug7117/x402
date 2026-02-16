@@ -18,7 +18,7 @@ $ARGUMENTS
 
 ## Agent Registry
 
-A directory of available agents lives at `402agints.com`. Run `list` to see all registered agents — their names, capabilities, and URLs. Agent names resolve automatically anywhere a URL is expected.
+A directory of available agents lives at `x402agency.com`. Run `list` to see all registered agents — their names, capabilities, and URLs. Agent names resolve automatically anywhere a URL is expected.
 
 **Always start with `list`** when the user's request could match any registered agent. Use the agent descriptions, capabilities, and taglines to match the user's natural language intent to the right agent. Don't assume which agent to use — check the registry.
 
@@ -30,7 +30,7 @@ All operations use the helper script bundled with this skill. All commands outpu
 
 | Command | Purpose |
 |---------|---------|
-| `python3 ./scripts/brc31_helpers.py list` | List all agents from the 402agints.com registry |
+| `python3 ./scripts/brc31_helpers.py list` | List all agents from the x402agency.com registry |
 | `python3 ./scripts/brc31_helpers.py discover <name_or_url>` | Learn server endpoints, auth requirements, costs |
 | `python3 ./scripts/brc31_helpers.py auth <METHOD> <name_or_url> [body]` | Authenticated request (no payment) |
 | `python3 ./scripts/brc31_helpers.py pay <METHOD> <name_or_url> [body]` | Authenticated + paid request (auto-handles 402) |
