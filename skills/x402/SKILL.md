@@ -35,6 +35,7 @@ All operations use the helper script bundled with this skill. All commands outpu
 | `python3 ./scripts/brc31_helpers.py auth <METHOD> <name_or_url> [body]` | Authenticated request (no payment) |
 | `python3 ./scripts/brc31_helpers.py pay <METHOD> <name_or_url> [body]` | Authenticated + paid request (auto-handles 402) |
 | `python3 ./scripts/brc31_helpers.py identity` | Get wallet's 66-char hex identity key |
+| `python3 ./scripts/brc31_helpers.py execute-action <json>` | Execute a pending action template (broadcasts inscription tx after user confirms) |
 | `python3 ./scripts/brc31_helpers.py session <base_url>` | Inspect cached session |
 
 Handshake is automatic — never call it manually before `auth` or `pay`.
@@ -57,10 +58,15 @@ Handshake is automatic — never call it manually before `auth` or `pay`.
 
 5. **Present** — Parse the JSON response (`{status, headers, body}`). The `body` is a string that may contain nested JSON — parse it before presenting.
 
-6. **Action** — If the `pay` response contains an `action` field with `outputs`,
-   the client auto-executes it via the wallet's `createAction`. The txid appears
-   in the `action_executed` block of the output. This is how agents like 1sat-agent
-   deliver on-chain results — the agent builds the template, the skill broadcasts it.
+6. **Action** — If the `pay` response contains `pending_action` (e.g. from 1sat-agent),
+   present the cost breakdown to the user and ask for confirmation before calling
+   `execute-action`. Do NOT broadcast automatically. The `pending_action` includes
+   costs (service fee, estimated mining fee, estimated total) and the action template.
+   Once the user confirms, run:
+   ```bash
+   python3 ./scripts/brc31_helpers.py execute-action '<action_json>'
+   ```
+   The result includes `txid` and `inscription_id`.
 
 ## Examples
 
